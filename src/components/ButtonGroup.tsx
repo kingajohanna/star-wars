@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ViewStyle, TextStyle } from 'react-native';
+import { colors } from '../theme/colors';
 
 interface ButtonGroupProps {
   options: number[];
@@ -27,21 +28,29 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    gap: 8,
+    marginVertical: 10,
   },
   button: {
     flex: 1,
     paddingVertical: 10,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: colors.black,
+
+    borderWidth: 3,
+    borderRadius: 5,
+    borderColor: colors.greenOpacity,
   },
   activeButton: {
-    backgroundColor: 'blue',
+    backgroundColor: colors.greenOpacity,
   },
   buttonText: {
     fontSize: 16,
+    color: colors.greenOpacity,
   },
   activeButtonText: {
-    color: '#000',
+    color: colors.black,
   },
 });
 

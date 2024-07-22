@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { Character } from '../types/SwapiCharacter';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import ButtonGroup from './ButtonGroup';
+import { colors } from '../theme/colors';
 
 interface ResultsListProps {
   data: Character[];
@@ -95,9 +96,9 @@ export const ResultsList: FC<ResultsListProps> = ({ data }) => {
   );
 
   const renderFooter = () => (
-    <>
+    <View style={styles.footerContainer}>
       <View style={styles.pagination}>
-        <TouchableOpacity onPress={() => handlePageChange(Math.max(1, currentPage - 1))}>
+        <TouchableOpacity onPress={() => handlePageChange(Math.max(1, currentPage - 1))} disabled={currentPage === 1}>
           <Text style={styles.headerText}>Previous</Text>
         </TouchableOpacity>
         <Text style={styles.headerText}>{`Page ${currentPage} of ${totalPages}`}</Text>
@@ -109,12 +110,12 @@ export const ResultsList: FC<ResultsListProps> = ({ data }) => {
         </TouchableOpacity>
       </View>
       <ButtonGroup options={pageSizeOptions} selectedOption={pageSize} setSelectedOption={setPageSize} />
-    </>
+    </View>
   );
 
   return (
     <View style={styles.container}>
-      <View style={styles.dataRow}>{headers.map((header) => renderHeaderItem(header.key, header.label))}</View>
+      <View style={styles.headerRow}>{headers.map((header) => renderHeaderItem(header.key, header.label))}</View>
       <FlatList
         data={paginatedData}
         keyExtractor={(item) => item.url}
@@ -140,22 +141,43 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 10,
     borderBottomWidth: 1,
+    borderBottomColor: colors.greenOpacity,
     paddingHorizontal: 10,
   },
   dataCell: {
     flex: 1,
     textAlign: 'center',
     fontSize: 14,
+    color: colors.yellow,
+  },
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderWidth: 3,
+    borderRadius: 8,
+    paddingVertical: 15,
+    paddingHorizontal: 10,
+    borderColor: colors.green,
   },
   headerCell: {
     flex: 1,
     alignItems: 'center',
   },
   headerText: {
-    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: colors.yellow,
   },
   pagination: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  paginationText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: colors.green,
+  },
+  footerContainer: {
+    paddingVertical: 10,
   },
 });

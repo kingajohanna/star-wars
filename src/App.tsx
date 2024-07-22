@@ -6,12 +6,14 @@
  */
 
 import React from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
 import { Search } from './screens/Search';
+import { colors } from './theme/colors';
 
 function App(): React.JSX.Element {
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor={colors.black} />
       <Search />
     </SafeAreaView>
   );
@@ -20,6 +22,7 @@ function App(): React.JSX.Element {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colors.black,
   },
 });
 
