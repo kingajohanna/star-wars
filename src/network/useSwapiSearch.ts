@@ -13,16 +13,21 @@ export const useSwapiSearch = (query: string) => {
     const fetchData = async () => {
       setLoading(true);
       setError(null);
+      setData([]);
 
       try {
-        const fetchCharacters = async (url: string): Promise<Character[]> => {
+        const fetchCharacters = async (url: string) => {
           const response = await fetch(url);
           const result = await response.json();
-          return result.results.concat(result.next ? await fetchCharacters(result.next) : []);
+
+          setData((prevData) => [...prevData, ...result.results]);
+
+          if (result.next) {
+            await fetchCharacters(result.next);
+          }
         };
 
-        const characters = await fetchCharacters(`${SWAPI_BASE_URL}/people/?search=${query}`);
-        setData(characters);
+        await fetchCharacters(`${SWAPI_BASE_URL}/people/?search=${query}`);
       } catch (error) {
         setError((error as Error).message);
       } finally {

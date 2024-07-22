@@ -12,6 +12,7 @@ export const Search = () => {
     <View style={styles.container}>
       <SearchBar setSearchQuery={setSearchQuery} />
       {loading && <ActivityIndicator size="large" />}
+      {error && <Text style={styles.error}>{error}</Text>}
       {!!data.length && <ResultsList data={data} />}
       {!data.length && <Image source={require('../assets/logo.png')} style={styles.image} />}
     </View>
@@ -28,5 +29,11 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     resizeMode: 'contain',
+  },
+  error: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'red',
+    textAlign: 'center',
   },
 });
