@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useSwapiSearch } from '../network/useSwapiSearch';
-import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
+import { SearchBar } from '../components/SearchBar';
+import { ResultsList } from '../components/ResultsList';
 
 export const Search = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -8,8 +10,9 @@ export const Search = () => {
 
   return (
     <View style={styles.container}>
-      <TextInput value={searchQuery} onChangeText={setSearchQuery} />
-      <FlatList data={data} keyExtractor={(item) => item.url} renderItem={({ item }) => <Text>{item.name}</Text>} />
+      <SearchBar setSearchQuery={setSearchQuery} />
+      {loading && <ActivityIndicator size="large" />}
+      {!!data.length && <ResultsList data={data} />}
     </View>
   );
 };
